@@ -350,13 +350,13 @@ const compliment = function (f) {
   }
 }
 
-const aboveAverageOfPrice = function (prices) {
+const aboveAverage = function (prices) {
   const value = prices.reduce(add, 0);
   const numOfElement = prices.length;
   const averagePrice = average(value, numOfElement);
   
-  return function (productDetails) {
-    return productDetails.amount > averagePrice;
+  return function (details) {
+    return details.amount > averagePrice;
   };
 };
 
@@ -365,7 +365,7 @@ const filterHighValueOrders = function (orders) {
     return order.amount;
   });
 
-  return orders.filter(aboveAverageOfPrice(prices));
+  return orders.filter(aboveAverage(prices));
 };
 
 console.log(
@@ -380,7 +380,9 @@ console.log(
 // books with reviews higher than the average rating 
 // [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, 
 // {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-const filterTopRatedBooks = function (books) { };
+const filterTopRatedBooks = function (books) {
+
+ };
 
 // employees whose salary is higher than the department average
 //  [{name: "Alice", salary: 5000, department: "HR"},
@@ -405,7 +407,23 @@ const filterActiveUsersByPostCount = function (users) { };
 
 // filter people older than a certain age [{name: "Alice", age: 25}, 
 // {name: "Bob", age: 30}, {name: "Charlie", age: 22}] => [{name: "Bob", age: 30}]
-const filterByAge = function (people, age) { };
+// start of filterByAge
+const olderThan = function (age) {
+  return function (personInfo) {
+    return personInfo.age > age;
+  }
+}
+
+const filterByAge = function (people, age) { 
+  return people.filter(olderThan(age));
+};
+
+console.log(
+  filterByAge([{ name: "Alice", age: 26 }, { name: "Bob", age: 30 },
+  { name: "Charlie", age: 22 }], 25)
+);
+
+/*                     end of filterByAge                     */
 
 // filter products that are cheaper than a given price [{name: "item1", price: 20}, 
 // {name: "item2", price: 50}, {name: "item3", price: 10}] => 

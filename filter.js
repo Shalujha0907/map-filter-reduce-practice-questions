@@ -227,12 +227,15 @@ const add = function (init, priceOfEach) {
   return (init + priceOfEach);
 };
 
-const average = function (value) {
-  return value / 2;
+const average = function (value, numOfElement) {
+  return value / numOfElement;
 };
 
 const belowAverageOfPrice = function (prices) {
-  const averagePrice = average(prices.reduce(add, 0));
+  const value = prices.reduce(add, 0);
+  const numOfElement = prices.length;
+  const averagePrice = average(value, numOfElement);
+
   return function (productDetails) {
     return productDetails.price < averagePrice;
   };
@@ -244,14 +247,17 @@ const getPrices = function (product) {
 
 const filterBelowAveragePrice = function (products) {
   const prices = products.map(getPrices);
+  console.log(prices);
+  
   return products.filter(belowAverageOfPrice(prices));
 };
 
 console.log(
   filterBelowAveragePrice([{ name: "item1", price: 10 },
-  { name: "item2", price: 20 }, { name: "item3", price: 5 }]),
-  filterBelowAveragePrice([{ name: "bottle", price: 15 },
-  { name: "mug", price: 25 }, { name: "glass", price: 10 }, { name: "spoon", price: 0 }])
+  { name: "item2", price: 14 }, { name: "item3", price: 15 }]),
+  filterBelowAveragePrice([{ name: "bottle", price: 17 },
+    { name: "mug", price: 25 }, { name: "glass", price: 11 },
+    { name: "spoon", price: 12 }])
 );
 
 /*          end of filterBelowAveragePrice                             */
@@ -307,7 +313,7 @@ console.log(
 
 /*          end of filterStudentsWithAllSubjectsPassed                  */
 
-//  [{name: "Alice", birthDate: "2024-12-01"}]
+// start of filterBirthdaysThisMonth
 const getBirthDates = function (personsBirthday) {
   return +personsBirthday.birthDate.slice(5, 7);
 };
@@ -332,10 +338,44 @@ console.log(
   { name: "Bobiee", birthDate: "2024-02-01" }], [2024, 2, 22]),
 );
 
+/*          end of filterBirthdaysThisMonth                 */
+
+// start of  filterHighValueOrders
 // orders that exceed the average order value [{orderId: 1, amount: 20},
 //  {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => 
 // [{orderId: 2, amount: 50}]
-const filterHighValueOrders = function (orders) { };
+const compliment = function (f) {
+  return function (...args) {
+    return !f(...args)
+  }
+}
+
+const aboveAverageOfPrice = function (prices) {
+  const value = prices.reduce(add, 0);
+  const numOfElement = prices.length;
+  const averagePrice = average(value, numOfElement);
+  
+  return function (productDetails) {
+    return productDetails.amount > averagePrice;
+  };
+};
+
+const filterHighValueOrders = function (orders) {
+  const prices = orders.map(function (order) {
+    return order.amount;
+  });
+
+  return orders.filter(aboveAverageOfPrice(prices));
+};
+
+console.log(
+  filterHighValueOrders([{ orderId: 1, amount: 20 }, { orderId: 2, amount: 50 },
+  { orderId: 3, amount: 10 }]),
+  filterHighValueOrders([{ orderId: 4, amount: 60 }, { orderId: 5, amount: 0 },
+  { orderId: 6, amount: 15 }])
+);
+
+/*             end of filterHighValueOrders                    */
 
 // books with reviews higher than the average rating 
 // [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, 

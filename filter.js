@@ -184,9 +184,9 @@ const getRange = function (from, to, step) {
 const prevMonthDates = function (currentDate) {
   const to = [4, 6, 9, 11].includes((currentDate[1] - 1)) ? 30 : 31;
   const from = to === 30 ? currentDate[2] + 1 : currentDate[2] + 2;
-  
+
   return getRange(from, to + 1, 1);
-}
+};
 
 const currentMonthDates = function (currentDate) {
   return getRange(0, currentDate[2] + 1, 1);
@@ -195,11 +195,10 @@ const currentMonthDates = function (currentDate) {
 const inTheLast30Days = function (currentDate) {
   return function (ordersDetails) {
     const date = ordersDetails.orderDate.split('-');
-
     if (+date[1] === (currentDate[1] - 1)) {
       return prevMonthDates(currentDate).includes(+date[2]);
     }
-    
+
     if (+date[1] === currentDate[1]) {
       return currentMonthDates(currentDate).includes(+date[2]);
     }
@@ -214,18 +213,48 @@ console.log(
   filterRecentOrders([{ orderDate: '2024-11-22' }, { orderDate: "2024-12-21" }],
     [2024, 12, 21]),
   filterRecentOrders([{ orderDate: '2024-11-21' },
-    { orderDate: '2024-11-01' }, { orderDate: '2024-12-01' },
-    { orderDate: "2024-12-22" }], [2024, 12, 21]),
+  { orderDate: '2024-11-01' }, { orderDate: '2024-12-01' },
+  { orderDate: "2024-12-22" }], [2024, 12, 21]),
   filterRecentOrders([{ orderDate: '2024-4-15' }, { orderDate: '2024-4-17' },
   { orderDate: "2024-5-15" }], [2024, 5, 15])
 );
 
 /*          end of filterRecentOrders                              */
 
-// products with a price lower than the average [{name: "item1", price: 10},
-//  {name: "item2", price: 20}, {name: "item3", price: 5}] =>
-//  [{name: "item1", price: 10}, {name: "item3", price: 5}]
-const filterBelowAveragePrice = function (products) { };
+// start of filterBelowAveragePrice
+
+const add = function (init, priceOfEach) {
+  return (init + priceOfEach);
+};
+
+const average = function (value) {
+  return value / 2;
+};
+
+const belowAverageOfPrice = function (prices) {
+  const averagePrice = average(prices.reduce(add, 0));
+  return function (productDetails) {
+    return productDetails.price < averagePrice;
+  };
+};
+
+const getPrices = function (product) {
+  return product.price;
+};
+
+const filterBelowAveragePrice = function (products) {
+  const prices = products.map(getPrices);
+  return products.filter(belowAverageOfPrice(prices));
+};
+
+console.log(
+  filterBelowAveragePrice([{ name: "item1", price: 10 },
+  { name: "item2", price: 20 }, { name: "item3", price: 5 }]),
+  filterBelowAveragePrice([{ name: "bottle", price: 15 },
+    { name: "mug", price: 25 }, { name: "glass", price: 10 }, { name: "spoon", price: 0 }])
+);
+
+/*          end of filterBelowAveragePrice                             */
 
 // active users who posted in the last 7 days [{username: "alice",
 //  lastPostDate: "2024-12-01", active: true}, {username: "bob", 

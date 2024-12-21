@@ -251,23 +251,54 @@ console.log(
   filterBelowAveragePrice([{ name: "item1", price: 10 },
   { name: "item2", price: 20 }, { name: "item3", price: 5 }]),
   filterBelowAveragePrice([{ name: "bottle", price: 15 },
-    { name: "mug", price: 25 }, { name: "glass", price: 10 }, { name: "spoon", price: 0 }])
+  { name: "mug", price: 25 }, { name: "glass", price: 10 }, { name: "spoon", price: 0 }])
 );
 
 /*          end of filterBelowAveragePrice                             */
 
+//start of filterRecentActiveUsers 
 // active users who posted in the last 7 days [{username: "alice",
 //  lastPostDate: "2024-12-01", active: true}, {username: "bob", 
 // lastPostDate: "2024-11-20", active: true}] => 
 // [{username: "alice", lastPostDate: "2024-12-01", active: true}]
-const filterRecentActiveUsers = function (users) { };
+
+const filterRecentActiveUsers = function (users) {
+};
+
+/*          end of filterRecentActiveUsers                             */
 
 // students who passed all subjects [{name: "John", subjects:
 //  [{name: "Math", passed: true}, {name: "Science", passed: true}]}, 
 // {name: "Jane", subjects: [{name: "Math", passed: false}, 
 // {name: "Science", passed: true}]}] => [{name: "John", 
 // subjects: [{name: "Math", passed: true}, {name: "Science", passed: true}]}]
-const filterStudentsWithAllSubjectsPassed = function (students) { };
+
+//start of filterStudentsWithAllSubjectsPassed   
+const isPassed = function (subject) {
+  return subject.passed;
+}
+
+const arePassedInAllSubjects = function (student) {
+  return student.subjects.every(isPassed);
+};
+
+const filterStudentsWithAllSubjectsPassed = function (students) {
+  return students.filter(arePassedInAllSubjects);
+};
+
+console.log(
+  filterStudentsWithAllSubjectsPassed([{name: "John", subjects:
+    [{name: "Math", passed: true}, {name: "Science", passed: true}]}, 
+    {name: "Jane", subjects: [{name: "Math", passed: false}, 
+      { name: "Science", passed: true }]
+    }]),
+    filterStudentsWithAllSubjectsPassed([{name: "nandini", subjects:
+      [{name: "telgu", passed: false}, {name: "Science", passed: true}]}, 
+      {name: "ankit", subjects: [{name: "Math", passed: true}, 
+      {name: "Science", passed: true}]}])
+);
+
+/*          end of filterStudentsWithAllSubjectsPassed                  */
 
 // people whose birthday is this month [{name: "Alice", 
 // birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] =>

@@ -276,7 +276,7 @@ const filterRecentActiveUsers = function (users) {
 //start of filterStudentsWithAllSubjectsPassed   
 const isPassed = function (subject) {
   return subject.passed;
-}
+};
 
 const arePassedInAllSubjects = function (student) {
   return student.subjects.every(isPassed);
@@ -287,23 +287,50 @@ const filterStudentsWithAllSubjectsPassed = function (students) {
 };
 
 console.log(
-  filterStudentsWithAllSubjectsPassed([{name: "John", subjects:
-    [{name: "Math", passed: true}, {name: "Science", passed: true}]}, 
-    {name: "Jane", subjects: [{name: "Math", passed: false}, 
-      { name: "Science", passed: true }]
-    }]),
-    filterStudentsWithAllSubjectsPassed([{name: "nandini", subjects:
-      [{name: "telgu", passed: false}, {name: "Science", passed: true}]}, 
-      {name: "ankit", subjects: [{name: "Math", passed: true}, 
-      {name: "Science", passed: true}]}])
+  filterStudentsWithAllSubjectsPassed([{
+    name: "John", subjects:
+      [{ name: "Math", passed: true }, { name: "Science", passed: true }]
+  },
+  {
+    name: "Jane", subjects: [{ name: "Math", passed: false },
+    { name: "Science", passed: true }]
+  }]),
+  filterStudentsWithAllSubjectsPassed([{
+    name: "nandini", subjects:
+      [{ name: "telgu", passed: false }, { name: "Science", passed: true }]
+  },
+  {
+    name: "ankit", subjects: [{ name: "Math", passed: true },
+    { name: "Science", passed: true }]
+  }])
 );
 
 /*          end of filterStudentsWithAllSubjectsPassed                  */
 
-// people whose birthday is this month [{name: "Alice", 
-// birthDate: "2024-12-01"}, {name: "Bob", birthDate: "2024-11-01"}] =>
 //  [{name: "Alice", birthDate: "2024-12-01"}]
-const filterBirthdaysThisMonth = function (people) { };
+const getBirthDates = function (personsBirthday) {
+  return +personsBirthday.birthDate.slice(5, 7);
+};
+
+const isBirthdayThisMonth = function (currentMonth) {
+  return function (personBirthDetails) {
+    return currentMonth === +personBirthDetails.birthDate.slice(5, 7);
+  }
+}
+
+const filterBirthdaysThisMonth = function (people, currentDate) {
+  const currentMonth = currentDate[1];
+  return people.filter(isBirthdayThisMonth(currentMonth))
+};
+
+console.log(
+  filterBirthdaysThisMonth([{ name: "Alice", birthDate: "2024-12-01" },
+  { name: "Bob", birthDate: "2024-11-01" }], [2024, 12, 22]),
+  filterBirthdaysThisMonth([{ name: "nandu", birthDate: "2024-01-01" },
+  { name: "Bob", birthDate: "2024-11-01" }], [2024, 12, 22]),
+  filterBirthdaysThisMonth([{ name: "nandu", birthDate: "2024-01-01" },
+  { name: "Bobiee", birthDate: "2024-02-01" }], [2024, 2, 22]),
+);
 
 // orders that exceed the average order value [{orderId: 1, amount: 20},
 //  {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => 

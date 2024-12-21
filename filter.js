@@ -248,7 +248,7 @@ const getPrices = function (product) {
 const filterBelowAveragePrice = function (products) {
   const prices = products.map(getPrices);
   console.log(prices);
-  
+
   return products.filter(belowAverageOfPrice(prices));
 };
 
@@ -256,8 +256,8 @@ console.log(
   filterBelowAveragePrice([{ name: "item1", price: 10 },
   { name: "item2", price: 14 }, { name: "item3", price: 15 }]),
   filterBelowAveragePrice([{ name: "bottle", price: 17 },
-    { name: "mug", price: 25 }, { name: "glass", price: 11 },
-    { name: "spoon", price: 12 }])
+  { name: "mug", price: 25 }, { name: "glass", price: 11 },
+  { name: "spoon", price: 12 }])
 );
 
 /*          end of filterBelowAveragePrice                             */
@@ -321,12 +321,12 @@ const getBirthDates = function (personsBirthday) {
 const isBirthdayThisMonth = function (currentMonth) {
   return function (personBirthDetails) {
     return currentMonth === +personBirthDetails.birthDate.slice(5, 7);
-  }
-}
+  };
+};
 
 const filterBirthdaysThisMonth = function (people, currentDate) {
   const currentMonth = currentDate[1];
-  return people.filter(isBirthdayThisMonth(currentMonth))
+  return people.filter(isBirthdayThisMonth(currentMonth));
 };
 
 console.log(
@@ -346,15 +346,15 @@ console.log(
 // [{orderId: 2, amount: 50}]
 const compliment = function (f) {
   return function (...args) {
-    return !f(...args)
-  }
-}
+    return !f(...args);
+  };
+};
 
 const aboveAverage = function (prices) {
   const value = prices.reduce(add, 0);
   const numOfElement = prices.length;
   const averagePrice = average(value, numOfElement);
-  
+
   return function (details) {
     return details.amount > averagePrice;
   };
@@ -382,7 +382,7 @@ console.log(
 // {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
 const filterTopRatedBooks = function (books) {
 
- };
+};
 
 // employees whose salary is higher than the department average
 //  [{name: "Alice", salary: 5000, department: "HR"},
@@ -411,10 +411,10 @@ const filterActiveUsersByPostCount = function (users) { };
 const olderThan = function (age) {
   return function (personInfo) {
     return personInfo.age > age;
-  }
-}
+  };
+};
 
-const filterByAge = function (people, age) { 
+const filterByAge = function (people, age) {
   return people.filter(olderThan(age));
 };
 
@@ -425,10 +425,25 @@ console.log(
 
 /*                     end of filterByAge                     */
 
-// filter products that are cheaper than a given price [{name: "item1", price: 20}, 
-// {name: "item2", price: 50}, {name: "item3", price: 10}] => 
-// [{name: "item1", price: 20}, {name: "item3", price: 10}]
-const filterByPrice = function (products, price) { };
+// start filterByPrice
+const cheaperThan = function (price) {
+  return function (product) {
+    return product.price < price;
+  };
+};
+
+const filterByPrice = function (products, price) {
+  return products.filter(cheaperThan(price));
+};
+
+console.log(
+  filterByPrice([{ name: "item1", price: 20 }, { name: "item2", price: 50 },
+    { name: "item3", price: 10 }], 15),
+    filterByPrice([{ name: "item1", price: 35 }, { name: "item2", price: 50 },
+      { name: "item3", price: 10 }], 50)
+);
+
+/*                     end of filterByPrice                      */
 
 // filter students who scored above a certain grade in Math 
 // [{name: "John", grades: {math: 80, science: 90}}, {name: "Jane", grades: 

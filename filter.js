@@ -224,7 +224,7 @@ console.log(
 
 // start of filterBelowAveragePrice
 const add = function (sumSoFar, number) {
-  return (sumSoFar + number);
+  return sumSoFar + number;
 };
 
 const average = function (total, numOfElement) {

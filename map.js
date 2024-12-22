@@ -81,7 +81,7 @@ console.log(
 
 const prependToAccumulator = function (reverseSoFar, element) {
   return element + reverseSoFar;
-}
+};
 
 const getReverse = function (string) {
   const stringInArr = [];
@@ -112,11 +112,15 @@ const negatedBooleansOf = function (booleans) { };
 const charCodesOf = function (strings) { };
 
 // start of domainNamesOf
-const getDomain = function (email) {
-  return email.split('@').at(-1);
-}
+const getSplitByChar = function (element, char) {
+  return element.split(char);
+};
 
-const domainNamesOf = function (emails) { 
+const getDomain = function (email) {
+  return getSplitByChar(email, '@').at(-1);
+};
+
+const domainNamesOf = function (emails) {
   return emails.map(getDomain);
 };
 
@@ -127,9 +131,21 @@ console.log(
 
 /*                    end of domainNamesOf                            */
 
-// split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
-const splitWordsOf = function (strings) { };
+// start of splitWordsOf
+const splitAtSpace = function (string) {
+  return getSplitByChar(string, ' ');
+};
 
+const splitWordsOf = function (strings) {
+  return strings.map(splitAtSpace);
+};
+
+console.log(
+  splitWordsOf(["hello world", "goodbye moon"]),
+  splitWordsOf(["hello", "moon", ' '])
+);
+
+/*                          end of splitWordsOf                       */
 // join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
 const joinedArraysOf = function (arrayOfArrays) { };
 

@@ -530,8 +530,6 @@ console.log(
 // grades: {math: 90, science: 80}}]
 const filterBySubjectGrade = function (students, subject, threshold) { };
 
-// filter photos with a minimum number of likes
-//  [{id: 1, likes: 100}, {id: 2, likes: 50}] => [{id: 1, likes: 100}]
 // start of filterByLikes
 const filterByLikes = function (photos, likeCount) {
   return photos.filter(compliment(moreThan(likeCount, 'likes')));
@@ -546,10 +544,25 @@ console.log(
 
 /*                        end of filterByLikes                      */
 
-// filter users who have made a certain number of posts
-//  [{username: "Alice", posts: 10}, {username: "Bob", posts: 5}] 
-// => [{username: "Alice", posts: 10}]
-const filterByPostCount = function (users, postCount) { };
+// start of filterByPostCount 
+const isEqual = function (postCount, attribtue) {
+  return function (user) {
+    return postCount === user[attribtue];
+  };
+};
+
+const filterByPostCount = function (users, postCount) {
+  return users.filter(isEqual(postCount, 'posts'));
+};
+
+console.log(
+  filterByPostCount([{ username: "Alice", posts: 10 },
+  { username: "Bob", posts: 5 }], 4),
+  filterByPostCount([{ username: "Alce", posts: 10 },
+  { username: "Bobee", posts: 5 }], 10)
+);
+
+/*                      end of filterByPostCount                    */
 
 // Apply a discount to each item's price, then filter for
 //  items under a certain price [{name: "item1", price: 100},

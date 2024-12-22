@@ -223,32 +223,32 @@ console.log(
 
 // start of filterBelowAveragePrice
 
-const add = function (init, priceOfEach) {
-  return (init + priceOfEach);
+const add = function (sumSoFar, number) {
+  return (sumSoFar + number);
 };
 
-const average = function (value, numOfElement) {
-  return value / numOfElement;
+const average = function (total, numOfElement) {
+  return total / numOfElement;
 };
 
-const belowAverage = function (prices, comparisonKey) {
-  const value = prices.reduce(add, 0);
+const belowAverage = function (prices, attribute) {
+  const total = prices.reduce(add, 0);
   const numOfElement = prices.length;
-  const averagePrice = average(value, numOfElement);
+  const averagePrice = average(total, numOfElement);
 
   return function (productDetails) {
-    return productDetails[comparisonKey] < averagePrice;
+    return productDetails[attribute] < averagePrice;
   };
 };
 
-const getPrices = function (comparisonKey) {
+const getValues = function (attribtue) {
   return function (product) {
-    return product[comparisonKey];
+    return product[attribtue];
   };
 };
 
 const filterBelowAveragePrice = function (products) {
-  const prices = products.map(getPrices('price'));
+  const prices = products.map(getValues('price'));
 
   return products.filter(belowAverage(prices, 'price'));
 };
@@ -349,7 +349,7 @@ const compliment = function (f) {
 };
 
 const filterHighValueOrders = function (orders) {
-  const prices = orders.map(getPrices('amount'));
+  const prices = orders.map(getValues('amount'));
   return orders.filter(compliment(belowAverage(prices, 'amount')));
 };
 
@@ -363,12 +363,8 @@ console.log(
 /*             end of filterHighValueOrders                    */
 
 // start of filterTopRatedBooks
-// books with reviews higher than the average rating 
-// [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, 
-// {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-
 const filterTopRatedBooks = function (books) {
-  const ratings = books.map(getPrices('rating'));
+  const ratings = books.map(getValues('rating'));
 
   return books.filter(compliment(belowAverage(ratings, 'rating')));
 };
@@ -384,7 +380,7 @@ console.log(
 
 // start of filterHighSalaryEmployees
 const filterHighSalaryEmployees = function (employees) {
-  const employeesSalary = employees.map(getPrices('salary'));
+  const employeesSalary = employees.map(getValues('salary'));
 
   return employees.filter(compliment(belowAverage(employeesSalary, 'salary')));
 };
@@ -405,14 +401,42 @@ console.log(
 // {name: "City C", population: 3000}] => [{name: "City B", population: 5000}]
 const filterCitiesAboveMedianPopulation = function (cities) { };
 
-// posts with more than the average number of likes [{postId: 1, likes: 100},
-//  {postId: 2, likes: 200}, {postId: 3, likes: 150}] => [{postId: 2, likes: 200}]
-const filterPopularPosts = function (posts) { };
+// start of filterPopularPosts
+const filterPopularPosts = function (posts) {
+  const postsLikes = posts.map(getValues('likes'));
 
+  return posts.filter(compliment(belowAverage(postsLikes, 'likes')));
+};
+
+console.log(
+  filterPopularPosts([{ postId: 1, likes: 100 }, { postId: 2, likes: 200 },
+  { postId: 3, likes: 150 }]),
+  filterPopularPosts([{ postId: 1, likes: 90 }, { postId: 2, likes: 0 },
+  { postId: 3, likes: 210 }]),
+);
+
+/*               end of filterPopularPosts                    */
+
+
+// start of filterActiveUsersByPostCount
 // users who have posted more than the average number of posts
 //  [{username: "Alice", postCount: 5}, {username: "Bob", postCount: 8}, 
 // {username: "Charlie", postCount: 3}] => [{username: "Bob", postCount: 8}]
-const filterActiveUsersByPostCount = function (users) { };
+const filterActiveUsersByPostCount = function (users) {
+  const postCounts = users.map(getValues('postCount'));
+
+  return users.filter(compliment(belowAverage(postCounts, 'postCount')));
+};
+
+console.log(
+  filterActiveUsersByPostCount([{ username: "Alice", postCount: 5 },
+  { username: "Bob", postCount: 8 }, { username: "Charlie", postCount: 3 }]),
+  filterActiveUsersByPostCount([{ username: "Alice", postCount: 8 },
+    { username: "Bob", postCount: 8 }, { username: "Charlie", postCount: 8 },
+    { username: "Charlie", postCount: 16 }])
+);
+
+/*               end of filterActiveUsersByPostCount              */
 
 // filter people older than a certain age [{name: "Alice", age: 25}, 
 // {name: "Bob", age: 30}, {name: "Charlie", age: 22}] => [{name: "Bob", age: 30}]

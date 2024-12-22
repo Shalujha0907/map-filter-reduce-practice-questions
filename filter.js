@@ -532,7 +532,19 @@ const filterBySubjectGrade = function (students, subject, threshold) { };
 
 // filter photos with a minimum number of likes
 //  [{id: 1, likes: 100}, {id: 2, likes: 50}] => [{id: 1, likes: 100}]
-const filterByLikes = function (photos, likes) { };
+// start of filterByLikes
+const filterByLikes = function (photos, likeCount) {
+  return photos.filter(compliment(moreThan(likeCount, 'likes')));
+};
+
+console.log(
+  filterByLikes([{ id: 1, likes: 100 }, { id: 2, likes: 40 },
+  { id: 2, likes: 30 }], 50),
+  filterByLikes([{ id: 1, likes: 10 }, { id: 2, likes: 40 },
+  { id: 2, likes: 30 }], 30)
+);
+
+/*                        end of filterByLikes                      */
 
 // filter users who have made a certain number of posts
 //  [{username: "Alice", posts: 10}, {username: "Bob", posts: 5}] 

@@ -177,14 +177,19 @@ console.log(
 
 /*                      end of repeatedStringsOf                      */
 
-// start of countVowelsOf 
+// start of countVowelsOf
+const isVowel = function (char) {
+  return 'aeiouAEIOU'.includes(char);
+};
+
 const counter = function (count, char) {
-  return 'aeiouAEIOU'.includes(char) ? count + 1 : count;
+  return isVowel(char) ? count + 1 : count;
 };
 
 const vowelCount = function (string) {
   return [...string].reduce(counter, 0);
 };
+
 const countVowelsOf = function (strings) {
   return strings.map(vowelCount);
 };
@@ -199,7 +204,7 @@ console.log(
 // reverse arrays of [[1, 2, 3], [4, 5, 6]] => [[3, 2, 1], [6, 5, 4]]
 const reverseOfArray = function (collection) {
   return collection.reverse();
-}
+};
 
 const reversedArraysOf = function (arrays) {
   return arrays.map(reverseOfArray);
@@ -210,7 +215,19 @@ console.log(
 );
 
 // remove vowels from ["apple", "banana", "grape"] => ["ppl", "bnn", "grp"]
-const withoutVowelsOf = function (strings) { };
+
+const consonantContainedWord = function (word) {
+  return word.filter(isVowel);
+};
+
+const withoutVowelsOf = function (strings) {
+  return strings.map(consonantContainedWord);
+};
+
+console.log(
+  withoutVowelsOf(["apple", "banana", "grape"]), withoutVowelsOf(['bcd', ''])
+);
+
 
 // cumulative sums of [[1, 2, 3], [4, 5, 6]] => [[1, 3, 6], [4, 9, 15]]
 // Example: cumulative sum of [1, 2, 3] is [1, 1+2, 1+2+3]

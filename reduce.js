@@ -1,9 +1,32 @@
-// sumOf([1, 2, 3, 4]) => 10
-const sumOf = function (numbers) { }
+// start of sumOf
+const add = function (sumSoFar, number) {
+  return sumSoFar + number;
+};
 
-// productOf([1, 2, 3, 4]) => 24
-const productOf = function (numbers) { }
+const sumOf = function (numbers) {
+  return numbers.reduce(add, 0);
+}
+ 
+console.log(
+  sumOf([1, 2, 3, 4]), sumOf([0, 1, 0, 1])
+);
 
+/*                    end of sumOf                                   */
+
+// start of productOf
+const product = function (productSoFar, number) {
+  return productSoFar * number;
+}
+
+const productOf = function (numbers) {
+  return numbers.reduce(product, 1);
+ }
+
+console.log(
+  productOf([1, , 2, 3, 4]), productOf([0, 1, 2, 3])
+);
+ 
+/*                      end of sumOf                                  */
 // averageOf([1, 2, 3, 4, 5]) => 3
 const averageOf = function (numbers) { }
 

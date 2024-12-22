@@ -189,12 +189,13 @@ const prevMonthDates = function (currentDate) {
 };
 
 const currentMonthDates = function (currentDate) {
-  return getRange(0, currentDate[2] + 1, 1);
+  return getRange(1, currentDate[2] + 1, 1);
 };
 
 const inTheLast30Days = function (currentDate) {
   return function (ordersDetails) {
     const date = ordersDetails.orderDate.split('-');
+
     if (+date[1] === (currentDate[1] - 1)) {
       return prevMonthDates(currentDate).includes(+date[2]);
     }

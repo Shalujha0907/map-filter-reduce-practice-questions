@@ -29,8 +29,22 @@ console.log(
 
 /*                   end of lengthsOf                   */
 
-// uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
-const uppercaseOf = function (strings) { };
+// start of uppercaseOf 
+const intoUpperCase = function (string) {
+  return string.toUpperCase();
+}
+
+const uppercaseOf = function (strings) { 
+  return strings.map(intoUpperCase);
+};
+
+console.log(
+  uppercaseOf(["something"]),
+  uppercaseOf(["hello", "world"]),
+  uppercaseOf(["", "  "])
+);
+
+/*                      end of upperCaseOf                         */
 
 // first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
 const firstCharactersOf = function (strings) { };

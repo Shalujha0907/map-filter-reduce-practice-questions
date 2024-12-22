@@ -231,25 +231,26 @@ const average = function (value, numOfElement) {
   return value / numOfElement;
 };
 
-const belowAverageOfPrice = function (prices) {
+const belowAverage = function (prices, comparisonKey) {
   const value = prices.reduce(add, 0);
   const numOfElement = prices.length;
   const averagePrice = average(value, numOfElement);
 
   return function (productDetails) {
-    return productDetails.price < averagePrice;
+    return productDetails[comparisonKey] < averagePrice;
   };
 };
 
-const getPrices = function (product) {
-  return product.price;
+const getPrices = function (comparisonKey) {
+  return function (product) {
+    return product[comparisonKey]; 
+  } 
 };
 
 const filterBelowAveragePrice = function (products) {
-  const prices = products.map(getPrices);
-  console.log(prices);
+  const prices = products.map(getPrices('price'));
 
-  return products.filter(belowAverageOfPrice(prices));
+  return products.filter(belowAverage(prices, 'price'));
 };
 
 console.log(
@@ -341,31 +342,15 @@ console.log(
 /*          end of filterBirthdaysThisMonth                 */
 
 // start of  filterHighValueOrders
-// orders that exceed the average order value [{orderId: 1, amount: 20},
-//  {orderId: 2, amount: 50}, {orderId: 3, amount: 10}] => 
-// [{orderId: 2, amount: 50}]
 const compliment = function (f) {
   return function (...args) {
     return !f(...args);
   };
 };
 
-const aboveAverage = function (prices) {
-  const value = prices.reduce(add, 0);
-  const numOfElement = prices.length;
-  const averagePrice = average(value, numOfElement);
-
-  return function (details) {
-    return details.amount > averagePrice;
-  };
-};
-
 const filterHighValueOrders = function (orders) {
-  const prices = orders.map(function (order) {
-    return order.amount;
-  });
-
-  return orders.filter(aboveAverage(prices));
+  const prices = orders.map(getPrices('amount'));
+  return orders.filter(compliment(belowAverage(prices, 'amount')));
 };
 
 console.log(
@@ -448,8 +433,19 @@ console.log(
 // filter students who scored above a certain grade in Math 
 // [{name: "John", grades: {math: 80, science: 90}}, {name: "Jane", grades: 
 // {math: 70, science: 85}}] => [{name: "John", grades: {math: 80, science: 90}}]
-const filterByMathGrade = function (students, grade) { };
+//start of filterByMathGrade
+const gradeObject= function (grade) {
+  return function (student) {
+    return student.grades.math > grade;
+  };
+};
 
+const filterByMathGrade = function (students) {
+  return students.filter(gradeAbove);
+ };
+
+//  console.log(filterByMathGrade(gradeObject));
+ 
 // filter events that occur before a certain date [{name: "Event1", date: "2024-12-01"}, {name: "Event2", date: "2024-11-15"}] => [{name: "Event2", date: "2024-11-15"}]
 const filterByDate = function (events, date) { };
 

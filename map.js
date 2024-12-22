@@ -146,8 +146,22 @@ console.log(
 );
 
 /*                          end of splitWordsOf                       */
-// join arrays of [["a", "b"], ["c", "d"]] => ["ab", "cd"]
-const joinedArraysOf = function (arrayOfArrays) { };
+// start of joinArraysOf 
+const mergeArray = function (list) {
+  return list.join('');
+}
+
+const joinedArraysOf = function (arrayOfArrays) { 
+  return arrayOfArrays.map(mergeArray);
+};
+
+console.log(
+  joinedArraysOf([["a", "b"], ["c", "d"]]), joinedArraysOf([['', '', ' ']]),
+  joinedArraysOf([['shalu', 'jha'], ['thought', 'Works']])
+);
+
+
+/*                  end of joinedArraysOf                             */ 
 
 // repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
 const repeatedStringsOf = function (strings) { };

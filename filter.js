@@ -497,23 +497,32 @@ console.log(
 );
 
 /*                      end of filterBySalary                     */
-// filter orders with a quantity greater than a given number
-//  [{orderId: 1, quantity: 10}, {orderId: 2, quantity: 5}] =>
-//  [{orderId: 1, quantity: 10}]
+
+// start of filterByQuantity
 const filterByQuantity = function (orders, certainQuantity) {
   return orders.filter(moreThan(certainQuantity, 'quantity'));
 };
- 
+
 console.log(
   filterByQuantity([{ orderId: 1, quantity: 10 }, { orderId: 2, quantity: 5 },
   { orderId: 3, quantity: 15 }], 10)
 );
 
+/*                      end of filterByQuantity                   */
 
-// filter books published after a certain year
-//  [{title: "Book1", year: 2020}, {title: "Book2", year: 2022}]
-//  => [{title: "Book2", year: 2022}]
-const filterByYear = function (books, year) { };
+// start of filterByYear
+const filterByYear = function (books, afterThisYear) {
+  return books.filter(moreThan(afterThisYear, 'year'));
+};
+
+console.log(
+  filterByYear([{ title: "Book1", year: 2020 }, { title: "Book2", year: 2022 }],
+    2021),
+  filterByYear([{ title: "Book3", year: 2004 }, { title: "Book4", year: 2000 }],
+    1900)
+);
+
+/*                    end of filterByYear                         */
 
 // filter students with a grade higher than a given threshold 
 // in a specific subject [{name: "Alice", grades: {math: 90, science: 80}}, 

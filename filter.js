@@ -362,12 +362,25 @@ console.log(
 
 /*             end of filterHighValueOrders                    */
 
+// start of filterTopRatedBooks
 // books with reviews higher than the average rating 
 // [{title: "Book 1", rating: 4}, {title: "Book 2", rating: 5}, 
 // {title: "Book 3", rating: 3}] => [{title: "Book 2", rating: 5}]
-const filterTopRatedBooks = function (books) {
 
+const filterTopRatedBooks = function (books) {
+  const ratings = books.map(getPrices('rating'));
+
+  return books.filter(compliment(belowAverage(ratings, 'rating')));
 };
+
+console.log(
+  filterTopRatedBooks([{ title: "Book 1", rating: 4 },
+    { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }]),
+  filterTopRatedBooks([{ title: "Book 1", rating: 10 },
+    { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }])
+);
+
+/*                    end of filterTopRatedBooks               */
 
 // employees whose salary is higher than the department average
 //  [{name: "Alice", salary: 5000, department: "HR"},

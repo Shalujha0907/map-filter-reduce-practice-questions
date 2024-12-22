@@ -64,7 +64,17 @@ console.log(
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false
-const truthValuesOf = function (numbers) { };
+const isNonZero = function (number) {
+  return number !== 0;
+}
+
+const truthValuesOf = function (numbers) {
+  return numbers.map(isNonZero);
+};
+ 
+console.log(
+  truthValuesOf([0, 1, 2]), truthValuesOf([0, 0]),truthValuesOf([10, 100, 100])
+);
 
 // reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
 const reversedStringsOf = function (strings) { };

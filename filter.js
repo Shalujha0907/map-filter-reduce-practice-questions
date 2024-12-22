@@ -92,6 +92,7 @@ console.log(
 
 /*          end of filterNumbersGreaterThanTen                   */
 
+// start of filterLongBooks
 const pagesLessThan = function (book) {
   return book.pages > 200;
 };
@@ -158,7 +159,6 @@ console.log(
 /*          end of filterInStockProducts                            */
 
 // start of filterRecentOrders 
-
 const greaterThan = function (from, to) {
   return from > to;
 };
@@ -222,7 +222,6 @@ console.log(
 /*          end of filterRecentOrders                              */
 
 // start of filterBelowAveragePrice
-
 const add = function (sumSoFar, number) {
   return (sumSoFar + number);
 };
@@ -267,7 +266,6 @@ console.log(
 // active users who posted in the last 7 days [{username: "alice",
 //  lastPostDate: "2024-12-01", active: true}, {username: "bob", 
 // lastPostDate: "2024-11-20", active: true}] => 
-
 const filterRecentActiveUsers = function (users) {
 };
 

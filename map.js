@@ -1,8 +1,33 @@
-// squares of [1, 2, 3] => [1, 4, 9]
-const squaresOf = function (numbers) { };
+// start of suqaresOf 
+const square = function (number) {
+  return Math.pow(number, 2);
+};
 
-// lengths of ["apple", "banana", "kiwi"] => [5, 6, 4]
-const lengthsOf = function (strings) { };
+const squaresOf = function (numbers) {
+  return numbers.map(square);
+};
+
+console.log(
+  squaresOf([1, 2, 3, 4]),
+  squaresOf([0, 1, 5])
+);
+/*                   end of squaresOf                    */
+
+// start of lengthsOf
+const lengthOfElement = function (element) {
+  return element.length;
+};
+
+const lengthsOf = function (strings) {
+  return strings.map(lengthOfElement);
+};
+
+console.log(
+  lengthsOf(["apple", "banana", "kiwi"]),
+  lengthsOf(["", "grapes", "  "])
+);
+
+/*                   end of lengthsOf                   */
 
 // uppercase of ["hello", "world"] => ["HELLO", "WORLD"]
 const uppercaseOf = function (strings) { };

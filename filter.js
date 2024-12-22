@@ -479,14 +479,14 @@ const filterByMathGrade = function (students) {
 const filterByDate = function (events, date) { };
 
 // Start of filterBySalary
-const moreThan = function (certainSalary) {
+const moreThan = function (valueToCompare, attribute) {
   return function (employeeDetails) {
-    return employeeDetails.salary > certainSalary;
+    return employeeDetails[attribute] > valueToCompare;
   };
 };
 
 const filterBySalary = function (employees, certainSalary) {
-  return employees.filter(moreThan(certainSalary));
+  return employees.filter(moreThan(certainSalary, 'salary'));
 };
 
 console.log(
@@ -500,7 +500,15 @@ console.log(
 // filter orders with a quantity greater than a given number
 //  [{orderId: 1, quantity: 10}, {orderId: 2, quantity: 5}] =>
 //  [{orderId: 1, quantity: 10}]
-const filterByQuantity = function (orders, quantity) { };
+const filterByQuantity = function (orders, certainQuantity) {
+  return orders.filter(moreThan(certainQuantity, 'quantity'));
+};
+ 
+console.log(
+  filterByQuantity([{ orderId: 1, quantity: 10 }, { orderId: 2, quantity: 5 },
+  { orderId: 3, quantity: 15 }], 10)
+);
+
 
 // filter books published after a certain year
 //  [{title: "Book1", year: 2020}, {title: "Book2", year: 2022}]

@@ -32,9 +32,9 @@ console.log(
 // start of uppercaseOf 
 const intoUpperCase = function (string) {
   return string.toUpperCase();
-}
+};
 
-const uppercaseOf = function (strings) { 
+const uppercaseOf = function (strings) {
   return strings.map(intoUpperCase);
 };
 
@@ -46,8 +46,21 @@ console.log(
 
 /*                      end of upperCaseOf                         */
 
-// first characters of ["apple", "banana", "kiwi"] => ["a", "b", "k"]
-const firstCharactersOf = function (strings) { };
+// start of firstCharactersOf 
+const getFirstChar = function (string) {
+  return string[0];
+};
+
+const firstCharactersOf = function (strings) {
+  return strings.map(getFirstChar);
+};
+
+console.log(
+  firstCharactersOf(['hello', 'world']),
+  firstCharactersOf(['how', 'are', 'you', 'doing'])
+);
+
+/*              end of firstCharacterOf                          */
 
 // truth values of [0, 1, 2, 3] => [false, true, true, true]
 // Assume non-zero numbers are true, and zero is false

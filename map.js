@@ -62,22 +62,44 @@ console.log(
 
 /*              end of firstCharacterOf                          */
 
-// truth values of [0, 1, 2, 3] => [false, true, true, true]
-// Assume non-zero numbers are true, and zero is false
+// start of truthValuesOf
 const isNonZero = function (number) {
   return number !== 0;
-}
+};
 
 const truthValuesOf = function (numbers) {
   return numbers.map(isNonZero);
 };
- 
+
 console.log(
-  truthValuesOf([0, 1, 2]), truthValuesOf([0, 0]),truthValuesOf([10, 100, 100])
+  truthValuesOf([0, 1, 2]), truthValuesOf([0, 0]), truthValuesOf([10, 100, 100])
+);
+/*              end of truthValuesOf                              */
+
+// start of reversedStringsOf
+// reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
+
+const prependToAccumulator = function (reverseSoFar, element) {
+  return element + reverseSoFar;
+}
+
+const getReverse = function (string) {
+  const stringInArr = [];
+  stringInArr.push(...string);
+
+  return stringInArr.reduce(prependToAccumulator, '');
+};
+
+const reversedStringsOf = function (strings) {
+  return strings.map(getReverse);
+};
+
+console.log(
+  reversedStringsOf(['hello', 'world']), reversedStringsOf(['', ' ']),
+  reversedStringsOf(['olleh', 'dlrow'])
 );
 
-// reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-const reversedStringsOf = function (strings) { };
+/*              end of reversedStringsOf                             */
 
 // double letters of ["cat", "dog", "bat"] => ["ccaat", "ddoog", "bbaatt"]
 const doubleLettersOf = function (strings) { };

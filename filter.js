@@ -231,7 +231,7 @@ const average = function (total, numOfElement) {
   return total / numOfElement;
 };
 
-const belowAverage = function (prices, attribute) {
+const isBelowAverage = function (prices, attribute) {
   const total = prices.reduce(add, 0);
   const numOfElement = prices.length;
   const averagePrice = average(total, numOfElement);
@@ -250,7 +250,7 @@ const getValues = function (attribtue) {
 const filterBelowAveragePrice = function (products) {
   const prices = products.map(getValues('price'));
 
-  return products.filter(belowAverage(prices, 'price'));
+  return products.filter(isBelowAverage(prices, 'price'));
 };
 
 console.log(
@@ -342,7 +342,7 @@ const compliment = function (f) {
 
 const filterHighValueOrders = function (orders) {
   const prices = orders.map(getValues('amount'));
-  return orders.filter(compliment(belowAverage(prices, 'amount')));
+  return orders.filter(compliment(isBelowAverage(prices, 'amount')));
 };
 
 console.log(
@@ -358,7 +358,7 @@ console.log(
 const filterTopRatedBooks = function (books) {
   const ratings = books.map(getValues('rating'));
 
-  return books.filter(compliment(belowAverage(ratings, 'rating')));
+  return books.filter(compliment(isBelowAverage(ratings, 'rating')));
 };
 
 console.log(
@@ -374,7 +374,7 @@ console.log(
 const filterHighSalaryEmployees = function (employees) {
   const employeesSalary = employees.map(getValues('salary'));
 
-  return employees.filter(compliment(belowAverage(employeesSalary, 'salary')));
+  return employees.filter(compliment(isBelowAverage(employeesSalary, 'salary')));
 };
 
 console.log(
@@ -397,7 +397,7 @@ const filterCitiesAboveMedianPopulation = function (cities) { };
 const filterPopularPosts = function (posts) {
   const postsLikes = posts.map(getValues('likes'));
 
-  return posts.filter(compliment(belowAverage(postsLikes, 'likes')));
+  return posts.filter(compliment(isBelowAverage(postsLikes, 'likes')));
 };
 
 console.log(
@@ -414,7 +414,7 @@ console.log(
 const filterActiveUsersByPostCount = function (users) {
   const postCounts = users.map(getValues('postCount'));
 
-  return users.filter(compliment(belowAverage(postCounts, 'postCount')));
+  return users.filter(compliment(isBelowAverage(postCounts, 'postCount')));
 };
 
 console.log(

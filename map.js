@@ -111,8 +111,21 @@ const negatedBooleansOf = function (booleans) { };
 // Use the `charCodeAt` method on each string
 const charCodesOf = function (strings) { };
 
-// extract domain names from ["user1@gmail.com", "admin@yahoo.com"] => ["gmail.com", "yahoo.com"]
-const domainNamesOf = function (emails) { };
+// start of domainNamesOf
+const getDomain = function (email) {
+  return email.split('@').at(-1);
+}
+
+const domainNamesOf = function (emails) { 
+  return emails.map(getDomain);
+};
+
+console.log(
+  domainNamesOf(["user1@gmail.com", "admin@yahoo.com"]), domainNamesOf(['']),
+  domainNamesOf(['nandu@gvc.com', 'choti@something.com'])
+);
+
+/*                    end of domainNamesOf                            */
 
 // split words in ["hello world", "goodbye moon"] => [["hello", "world"], ["goodbye", "moon"]]
 const splitWordsOf = function (strings) { };
@@ -456,4 +469,4 @@ const summarizeBookChapters = function (books) { };
 // given an array of events, where each event has a `name` and an array of `attendees`, where each attendee has a `firstName` and `lastName`, return an array of events where each event contains the event name and an array of full names of attendees
 // [{name: "Concert", attendees: [{firstName: "John", lastName: "Doe"}, {firstName: "Jane", lastName: "Smith"}]}, {name: "Conference", attendees: [{firstName: "Bob", lastName: "Brown"}]}]
 // => [{name: "Concert", attendees: ["John Doe", "Jane Smith"]}, {name: "Conference", attendees: ["Bob Brown"]}]
-const getEventAttendees = function (events) { };
+const getEventAttendees = function (events) { }; 

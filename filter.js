@@ -243,8 +243,8 @@ const belowAverage = function (prices, comparisonKey) {
 
 const getPrices = function (comparisonKey) {
   return function (product) {
-    return product[comparisonKey]; 
-  } 
+    return product[comparisonKey];
+  };
 };
 
 const filterBelowAveragePrice = function (products) {
@@ -375,19 +375,30 @@ const filterTopRatedBooks = function (books) {
 
 console.log(
   filterTopRatedBooks([{ title: "Book 1", rating: 4 },
-    { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }]),
+  { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }]),
   filterTopRatedBooks([{ title: "Book 1", rating: 10 },
-    { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }])
+  { title: "Book 2", rating: 5 }, { title: "Book 3", rating: 3 }])
 );
 
 /*                    end of filterTopRatedBooks               */
 
-// employees whose salary is higher than the department average
-//  [{name: "Alice", salary: 5000, department: "HR"},
-//  {name: "Bob", salary: 7000, department: "HR"}, 
-// {name: "Charlie", salary: 4000, department: "IT"}] => 
-// [{name: "Bob", salary: 7000, department: "HR"}]
-const filterHighSalaryEmployees = function (employees) { };
+// start of filterHighSalaryEmployees
+const filterHighSalaryEmployees = function (employees) {
+  const employeesSalary = employees.map(getPrices('salary'));
+
+  return employees.filter(compliment(belowAverage(employeesSalary, 'salary')));
+};
+
+console.log(
+  filterHighSalaryEmployees([{ name: "Alice", salary: 5000, department: "HR" },
+  { name: "Bob", salary: 7000, department: "HR" },
+  { name: "Charlie", salary: 4000, department: "IT" }]),
+  filterHighSalaryEmployees([{ name: "Alice", salary: 1500, department: "HR" },
+  { name: "Bob", salary: 3500, department: "HR" },
+  { name: "Charlie", salary: 5000, department: "IT" }])
+);
+
+/*               end of filterHighSalaryEmployees              */
 
 // cities with a population higher than the median
 //  [{name: "City A", population: 2000}, {name: "City B", population: 5000}, 
@@ -436,9 +447,9 @@ const filterByPrice = function (products, price) {
 
 console.log(
   filterByPrice([{ name: "item1", price: 20 }, { name: "item2", price: 50 },
-    { name: "item3", price: 10 }], 15),
-    filterByPrice([{ name: "item1", price: 35 }, { name: "item2", price: 50 },
-      { name: "item3", price: 10 }], 50)
+  { name: "item3", price: 10 }], 15),
+  filterByPrice([{ name: "item1", price: 35 }, { name: "item2", price: 50 },
+  { name: "item3", price: 10 }], 50)
 );
 
 /*                     end of filterByPrice                      */
@@ -447,7 +458,7 @@ console.log(
 // [{name: "John", grades: {math: 80, science: 90}}, {name: "Jane", grades: 
 // {math: 70, science: 85}}] => [{name: "John", grades: {math: 80, science: 90}}]
 //start of filterByMathGrade
-const gradeObject= function (grade) {
+const gradeObject = function (grade) {
   return function (student) {
     return student.grades.math > grade;
   };
@@ -455,10 +466,10 @@ const gradeObject= function (grade) {
 
 const filterByMathGrade = function (students) {
   return students.filter(gradeAbove);
- };
+};
 
 //  console.log(filterByMathGrade(gradeObject));
- 
+
 // filter events that occur before a certain date [{name: "Event1", date: "2024-12-01"}, {name: "Event2", date: "2024-11-15"}] => [{name: "Event2", date: "2024-11-15"}]
 const filterByDate = function (events, date) { };
 

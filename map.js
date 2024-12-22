@@ -77,8 +77,6 @@ console.log(
 /*              end of truthValuesOf                              */
 
 // start of reversedStringsOf
-// reverse strings of ["hello", "world"] => ["olleh", "dlrow"]
-
 const prependToAccumulator = function (reverseSoFar, element) {
   return element + reverseSoFar;
 };
@@ -149,9 +147,9 @@ console.log(
 // start of joinArraysOf 
 const mergeArray = function (list) {
   return list.join('');
-}
+};
 
-const joinedArraysOf = function (arrayOfArrays) { 
+const joinedArraysOf = function (arrayOfArrays) {
   return arrayOfArrays.map(mergeArray);
 };
 
@@ -161,10 +159,23 @@ console.log(
 );
 
 
-/*                  end of joinedArraysOf                             */ 
+/*                  end of joinedArraysOf                             */
 
-// repeat strings in ["hi", "bye"] => ["hihi", "byebye"]
-const repeatedStringsOf = function (strings) { };
+// start of repeatedStringsOf
+const doublingElement = function (string) {
+  return string.repeat(2);
+}
+
+const repeatedStringsOf = function (strings) {
+  return strings.map(doublingElement);
+};
+
+console.log(
+  repeatedStringsOf(["hi", "bye"]), repeatedStringsOf([''], ['  ']),
+  repeatedStringsOf(['qwerty'])
+);
+
+/*                      end of repeatedStringsOf                      */
 
 // count vowels in ["apple", "banana", "grape"] => [2, 3, 2]
 const countVowelsOf = function (strings) { };

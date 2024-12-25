@@ -417,41 +417,173 @@ console.log(
 );
 
 // create abbreviations from [{ city: "New York", country: "USA" }, { city: "Los Angeles", country: "USA" }] => ["NY, USA", "LA, USA"]
-const abbreviations = function (objects) {};
+const getInitials = ({ city, country }) => {
+  return (
+    city
+      .split(" ")
+      .map((word) => word[0])
+      .join("") +
+    ", " +
+    country
+  );
+};
+
+const abbreviations = function (objects) {
+  return objects.map(getInitials);
+};
+
+console.log(
+  abbreviations([
+    { city: "New York", country: "USA" },
+    { city: "Los Angeles", country: "USA" },
+  ])
+);
 
 // extract scores for math tests from [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }] => [90, 80]
-const mathScores = function (objects) {};
+const mathScores = function (objects) {
+  return objects.map(({ scores }) => scores.math);
+};
+
+console.log(
+  mathScores([
+    { name: "Alice", scores: { math: 90, english: 85 } },
+    { name: "Bob", scores: { math: 80, english: 75 } },
+  ])
+);
+
+const englishScores = function (objects) {
+  return objects.map(
+    ({ name, scores }) => name + "'s englishScore: " + scores.english
+  );
+};
+
+console.log(
+  englishScores([
+    { name: "Alice", scores: { math: 90, english: 85 } },
+    { name: "Bob", scores: { math: 80, english: 75 } },
+  ])
+);
 
 // extract coordinates from [{ x: 1, y: 2 }, { x: 3, y: 4 }] => [[1, 2], [3, 4]]
-const extractCoordinates = function (objects) {};
+const extractCoordinates = function (objects) {
+  return objects.map((coordinate) => [coordinate.x, coordinate.y]);
+};
+
+console.log(
+  extractCoordinates([
+    { x: 1, y: 2 },
+    { x: 3, y: 4 },
+  ])
+);
 
 // extract full name and age from [{ firstName: "Alice", lastName: "Smith", age: 25 }, { firstName: "Bob", lastName: "Brown", age: 30 }] => [["Alice Smith", 25], ["Bob Brown", 30]]
-const fullNameAndAge = function (objects) {};
+const fullNameAndAge = function (objects) {
+  return objects.map((personDetails) => [
+    personDetails.firstName,
+    personDetails.lastName,
+    personDetails.age,
+  ]);
+};
+
+console.log(
+  fullNameAndAge([
+    { firstName: "Alice", lastName: "Smith", age: 25 },
+    { firstName: "Bob", lastName: "Brown", age: 30 },
+  ])
+);
 
 // extract scores from [{ name: "Alice", scores: { math: 90, english: 85 } }, { name: "Bob", scores: { math: 80, english: 75 } }] => [[90, 85], [80, 75]]
-const extractScores = function (objects) {};
+const extractScores = function (objects) {
+  return objects.map(({ scores }) => [scores.math, scores.english]);
+};
+
+console.log(
+  extractScores([
+    { name: "Alice", scores: { math: 90, english: 85 } },
+    { name: "Bob", scores: { math: 80, english: 75 } },
+  ])
+);
 
 // extract key-value pairs from [{ key: "a", value: 1 }, { key: "b", value: 2 }] => [["a", 1], ["b", 2]]
-const keyValuePairs = function (objects) {};
+const keyValuePairs = function (objects) {
+  return objects.map(({ key, value }) => ['"' + key + '"', value]);
+};
+
+console.log(
+  keyValuePairs([
+    { key: "a", value: 1 },
+    { key: "b", value: 2 },
+  ])
+);
 
 // split full names into first and last names from [{ name: "Alice Smith" }, { name: "Bob Brown" }] => [["Alice", "Smith"], ["Bob", "Brown"]]
-const splitFullNames = function (objects) {};
+const splitFullNames = function (objects) {
+  return objects.map(({ name }) => [name.split(" ")]);
+};
+
+console.log(splitFullNames([{ name: "Alice Smith" }, { name: "Bob Brown" }]));
 
 // normalize scores so they fall between 0 and 1 based on the max score from [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }] => [0.8, 1]
-const normalizeScores = function (objects) {};
+const normalizeScores = function (objects) {
+  return objects.map(({ score }) => score / 100);
+};
+
+console.log(
+  normalizeScores([
+    { name: "Alice", score: 80 },
+    { name: "Bob", score: 100 },
+  ]),
+  normalizeScores([
+    { name: "Aly", score: 67 },
+    { name: "Bubliee", score: 75 },
+  ])
+);
 
 // calculate percentage contribution of each number in [10, 20, 30] (relative to the total sum) => [16.67, 33.33, 50]
-const percentageContributions = function (numbers) {};
+const sum = (accumulator, number) => {
+  return accumulator + number;
+};
+
+const percentageContributions = function (numbers) {
+  const total = numbers.reduce(sum, 0);
+
+  return numbers.map((number) => (number / total) * 100);
+};
+
+console.log(percentageContributions([10, 20, 30]));
 
 // subtract the smallest number from each number in [3, 8, 1] => [2, 7, 0]
-const subtractMin = function (numbers) {};
+const minOf = (minInit, number) => {
+  return minInit < number ? minInit : number;
+};
+
+const subtractMin = function (numbers) {
+  const minInit = numbers[0];
+  const minimum = numbers.reduce(minOf, minInit);
+
+  return numbers.map((number) => number - minimum);
+};
+
+console.log(subtractMin([3, 8, 1]));
 
 // calculate ranks (1-based, descending) for scores in [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }, { name: "Charlie", score: 90 }] => [2, 1, 3]
 const calculateRanks = function (objects) {};
 
 // normalize strings by the longest string length in ["cat", "elephant", "dog"] => ["cat    ", "elephant", "dog    "]
-// (pad with spaces to match the longest length)
-const normalizeStringLengths = function (strings) {};
+// (pad with spaces to match the longest length) /////////
+const getLongest = (longestInit, word) => {
+  return longestInit.length > word.length ? longestInit : word;
+};
+
+const fill = (string) => {};
+const normalizeStringLengths = function (strings) {
+  const longestString = strings.reduce(getLongest, "");
+  return strings.map((string) =>
+    string.split("").fill(" ", string.length, longestString.length)
+  );
+};
+
+console.log(normalizeStringLengths(["cat", "elephant", "dog"]));
 
 // normalize strings by centering them based on the longest string length in ["cat", "elephant", "dog"] => ["  cat   ", "elephant", "  dog   "]
 // (pad with spaces to justify to the center)

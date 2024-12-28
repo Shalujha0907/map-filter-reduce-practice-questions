@@ -271,21 +271,73 @@ const reverseString = function (words) {
 
 console.log(reverseString(["apple", "banana", "cherry"]));
 
-// duplicateNumbers([1, 2, 3]) => [1, 1, 2, 2, 3, 3]
-const makeDuplicates = function (duplicates, number) {};
+// start of duplicateNumbers
+const makeDuplicates = (duplicate, number) => {
+  for (let i = 0; i < 2; i++) {
+    duplicate.push(number);
+  }
+  return duplicate;
+};
 
-const duplicateNumbers = function (numbers) {};
+const duplicateNumbers = function (numbers) {
+  return numbers.reduce(makeDuplicates, []);
+};
 
-// console.log(duplicateNumbers([1, 2, 3, 4, 5]));
+console.log(duplicateNumbers([1, 2, 3]), duplicateNumbers([2, 6, 8]));
 
-// concatenateArrays([[1, 2], [3, 4], [5, 6]]) => [1, 2, 3, 4, 5, 6]
-const concatenateArrays = function (arrays) {};
+/*                        end of duplicateNumbers                         */
 
-// flattenArray([[1, 2], [3, 4], [5, 6]]) => [1, 2, 3, 4, 5, 6]
+// start of concatenateArrays
+const concatList = (init, subArray) => {
+  for (let i = 0; i < subArray.length; i++) {
+    init.push(subArray[i]);
+  }
 
-const flattenArray = function (arrays) {};
+  return init;
+};
 
-// uniqueNumbers([1, 2, 2, 3, 4, 4, 5]) => [1, 2, 3, 4, 5]
+const concatenateArrays = function (arrays) {
+  return arrays.reduce(concatList, []);
+};
+
+console.log(
+  concatenateArrays([
+    [1, 2],
+    [3, 4],
+    [5, 6],
+  ]),
+  concatenateArrays([
+    [1, 2],
+    [[3], [4, 8]],
+    [5, 6],
+  ])
+);
+
+/*                           end of concatenateArray                       */
+
+// start of flattenArray
+const getFlatList = (init, element) => {
+  if (!Array.isArray(element)) {
+    init.push(element);
+    return init;
+  }
+
+  element.reduce((insideInit, number) => {
+    return getFlatList(insideInit, number);
+  }, init);
+
+  return init;
+};
+
+const flattenArray = function (arrays) {
+  return arrays.reduce(getFlatList, []);
+};
+
+console.log(flattenArray([3, [1, 2], [3, 4]]));
+
+/*                         end of flattenArray                          */
+
+// start of uniqueNumbers
 const removeDuplicates = function (uniqueLists, number) {
   if (!uniqueLists.includes(number)) {
     uniqueLists.push(number);
@@ -299,6 +351,8 @@ const uniqueNumbers = function (numbers) {
 };
 
 console.log(uniqueNumbers([1, 2, 2, 4, 5, 5, 1]));
+
+/*                        end of uniqueNumbers                          */
 
 // groupByLength(["apple", "banana", "cherry", "date"]) => { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
 const groupByLength = function (strings) {};

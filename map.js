@@ -570,17 +570,15 @@ console.log(subtractMin([3, 8, 1]));
 const calculateRanks = function (objects) {};
 
 // normalize strings by the longest string length in ["cat", "elephant", "dog"] => ["cat    ", "elephant", "dog    "]
-// (pad with spaces to match the longest length) /////////
-const getLongest = (longestInit, word) => {
+// (pad with spaces to match the longest length)
+const getLongestWord = (longestInit, word) => {
   return longestInit.length > word.length ? longestInit : word;
 };
 
-const fill = (string) => {};
 const normalizeStringLengths = function (strings) {
-  const longestString = strings.reduce(getLongest, "");
-  return strings.map((string) =>
-    string.split("").fill(" ", string.length, longestString.length)
-  );
+  const longestString = strings.reduce(getLongestWord, "").length;
+
+  return strings.map((string) => string.padEnd(longestString, " "));
 };
 
 console.log(normalizeStringLengths(["cat", "elephant", "dog"]));
@@ -593,13 +591,47 @@ const centerJustifyStrings = function (strings) {};
 const scaleToMax100 = function (numbers) {};
 
 // map each number to the difference between it and the average of the array in [10, 20, 30] => [-10, 0, 10]
-const differencesFromMean = function (numbers) {};
+const mean = (numbers) => {
+  return numbers.reduce(sum, 0) / numbers.length;
+};
+
+const differencesFromMean = function (numbers) {
+  const meanValue = mean(numbers);
+
+  return numbers.map((number) => number - meanValue);
+};
+
+console.log(differencesFromMean([10, 20, 30]));
 
 // map each string to its frequency in ["apple", "banana", "apple", "apple", "banana"] => [3, 2, 3, 3, 2]
-const stringFrequencies = function (strings) {};
+
+const stringFrequencies = function (strings) {
+  return strings.map((string) =>
+    strings.reduce((count, word) => (word === string ? count + 1 : count), 0)
+  );
+};
+
+console.log(
+  stringFrequencies(["apple", "banana", "apple", "apple", "banana"]),
+  stringFrequencies(["merry", "christmas", "merry", "christmas"])
+);
 
 // mark the largest number in an array as true, others as false in [1, 3, 2] => [false, true, false]
-const markLargestNumber = function (numbers) {};
+const findLargestNumber = (maxInit, number) => {
+  return maxInit > number ? maxInit : number;
+};
+
+const markLargestNumber = function (numbers) {
+  const largestNumber = numbers.reduce(findLargestNumber, 0);
+
+  return numbers.map((number) => (number === largestNumber ? true : false));
+};
+
+console.log(
+  markLargestNumber([1, 3, 2]),
+  markLargestNumber([1, 8, 0]),
+  markLargestNumber([7, 7])
+);
 
 // normalize scores based on a curve: first find the max score, then subtract the mean, and scale the results to a range of 0-100 in [{ name: "Alice", score: 80 }, { name: "Bob", score: 100 }, { name: "Charlie", score: 90 }] => [60, 100, 80]
 // Steps: Find max score, calculate mean, normalize each score.
@@ -621,21 +653,107 @@ const normalizeByRange = function (numbers) {};
 // Steps: Calculate sum, find percentage of each number, sort in descending order.
 const percentageOfTotalSorted = function (numbers) {};
 
-// map a list of students' grades in multiple subjects to their average score, and then sort the averages in descending order in [{ name: "Alice", grades: [80, 90, 85] }, { name: "Bob", grades: [70, 75, 80] }] => [{ name: "Alice", avg: 85 }, { name: "Bob", avg: 75 }]
-// Steps: Calculate average for each student, then sort by average score.
-const sortStudentsByAverage = function (students) {};
+// start of sortStudentsByAverage
+const average = function (collection, numOfElement) {
+  if (numOfElement === 0) {
+    return 0;
+  }
 
-// map a list of numbers to their corresponding binary representation and then group them into arrays of equal lengths in [1, 2, 3, 4, 5] => [["1"], ["10"], ["11"], ["100"], ["101"]]
-// Steps: Convert numbers to binary, then group them into arrays.
-const mapToBinaryAndGroup = function (numbers) {};
+  const total = collection.reduce(sum, 0);
 
-// flatten an array of arrays into a single array and then filter out only the even numbers in [[1, 2, 3], [4, 5], [6, 7, 8]] => [2, 4, 6, 8]
-// Steps: Flatten the arrays into one, then filter for even numbers.
-const flattenAndFilterEven = function (arrays) {};
+  return total / numOfElement;
+};
 
-// from an array of arrays, where each array contains [name, age], return an array of names of people who are over 18, and then sort them alphabetically in [["Alice", 25], ["Bob", 17], ["Charlie", 22]] => ["Alice", "Charlie"]
-// Steps: Filter for age > 18, then sort by name.
-const filterAdultsAndSort = function (arrays) {};
+const sortStudentsByAverage = function (students) {
+  console.log(
+    students.map(({ name, grades }) => {
+      name, grades;
+    })
+  );
+
+  return students.map((student) => {
+    student.name, student.grades;
+  });
+};
+
+console.log(
+  sortStudentsByAverage([
+    { name: "Alice", grades: [80, 90, 85] },
+    { name: "Bob", grades: [70, 75, 80] },
+  ])
+);
+
+/*                        end of sortStudentsByAverage                   */
+
+// start of mapToBinaryAndGroup
+const intoBinary = (number) => {
+  if (number === 0) {
+    return "0";
+  }
+
+  let numberInBinary = "";
+
+  while (number > 0) {
+    numberInBinary = (number % 2) + numberInBinary;
+    number = Math.floor(number / 2);
+  }
+
+  return numberInBinary;
+};
+
+const mapToBinaryAndGroup = function (numbers) {
+  return numbers.map((number) => [intoBinary(number)]);
+};
+
+console.log(
+  mapToBinaryAndGroup([1, 2, 3, 4, 5]),
+  mapToBinaryAndGroup([0, 6, 7])
+);
+
+/*                          end of mapToBinaryAndGroup                   */
+
+// start flattenAndFilterEven
+const isEven = function (number) {
+  return (number & 1) !== 1;
+};
+
+const flattenAndFilterEven = function (arrays) {
+  return arrays.flatMap((number) => number).filter(isEven);
+};
+
+console.log(
+  flattenAndFilterEven([
+    [1, 2, 3],
+    [4, 5],
+    [6, 7, 8],
+  ])
+);
+
+/*                       end of flattenAndFilterEven                 */
+
+// start of filterAdultsAndSort
+const filterAdultsAndSort = function (arrays) {
+  return arrays
+    .filter((element) => element[1] > 18)
+    .map((element) => element[0])
+    .sort();
+};
+
+console.log(
+  filterAdultsAndSort([
+    ["Alice", 25],
+    ["Bob", 17],
+    ["Charlie", 22],
+  ]),
+  filterAdultsAndSort([
+    ["zara", 19],
+    ["yash", 21],
+    ["Charlie", 18],
+    ["kirti", 22],
+  ])
+);
+
+/*                        end of filterAdultsAndSort                      */
 
 // given an array of objects representing sales with date and amount, calculate the total sales for each month and return them as an array of arrays like [[month, total], ...] in [{ date: "2024-01-15", amount: 100 }, { date: "2024-02-10", amount: 150 }, { date: "2024-01-25", amount: 200 }] => [["2024-01", 300], ["2024-02", 150]]
 // Steps: Group by month, sum the sales for each month.
@@ -647,6 +765,10 @@ const totalSalaryByDepartment = function (employees) {};
 
 // for a list of students, return an array of objects that includes the student's name and their highest grade in [{ name: "Alice", grades: { math: 80, science: 90, history: 70 } }, { name: "Bob", grades: { math: 70, science: 85, history: 95 } }] => [{ name: "Alice", highestGrade: 90 }, { name: "Bob", highestGrade: 95 }]
 // Steps: For each student, find the highest grade from their grades object.
+const maximumn = function (number) {
+  return (number & 1) !== 1;
+};
+
 const highestGradeByStudent = function (students) {};
 
 // for a list of books with authors and publication years, return an array of objects that categorizes books into "old" (published before 2000) and "new" (published after 2000) in [{ title: "Book1", author: "Author1", year: 1999 }, { title: "Book2", author: "Author2", year: 2005 }] => [{ category: "old", books: [{ title: "Book1", author: "Author1" }] }, { category: "new", books: [{ title: "Book2", author: "Author2" }] }]

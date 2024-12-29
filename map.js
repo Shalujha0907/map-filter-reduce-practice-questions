@@ -576,9 +576,9 @@ const getLongestWord = (longestInit, word) => {
 };
 
 const normalizeStringLengths = function (strings) {
-  const longestString = strings.reduce(getLongestWord, "").length;
+  const maximuming = strings.reduce(getLongestWord, "").length;
 
-  return strings.map((string) => string.padEnd(longestString, " "));
+  return strings.map((string) => string.padEnd(maximuming, " "));
 };
 
 console.log(normalizeStringLengths(["cat", "elephant", "dog"]));

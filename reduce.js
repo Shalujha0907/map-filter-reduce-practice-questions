@@ -170,13 +170,14 @@ const greaterThan = function (value1, value2) {
 };
 
 const longestStr = function (longestWordSoFar, word) {
-  return greaterThan(longestWordSoFar, word) ? longestWordSoFar : word;
+  return longestWordSoFar.length > word.length ? longestWordSoFar : word;
 };
+
 const longestWord = function (words) {
   return words.reduce(longestStr, "");
 };
 
-console.log(longestWord(["apple", "banana", "cherry", "kiwi"]));
+console.log(longestWord(["apple", "banana", "kiwi"]));
 
 /*                            end of countNegativeNumbers              */
 
@@ -331,7 +332,7 @@ const flattenArray = function (arrays) {
   return arrays.reduce(getFlatList, []);
 };
 
-console.log(flattenArray([3, [1, 2], [3, 4]]));
+console.log(flattenArray([3, [1, 2], [3, [4]]]));
 
 /*                         end of flattenArray                          */
 
@@ -374,7 +375,9 @@ const zip = function (keys, values) {};
 const makeObject = function (keys, values) {};
 
 // invertObject({ "a": 1, "b": 2, "c": 3 }) => { 1: "a", 2: "b", 3: "c" }
-const invertObject = function (obj) {};
+const invertObject = function (obj) {
+  return obj.reduce((mergedObject, keyPair) => mergedObject);
+};
 
 // mergeArrays([["a", 1], ["b", 2]], [["c", 3], ["d", 4]]) => { "a": 1, "b": 2, "c": 3, "d": 4 }
 const mergeArrays = function (arr1, arr2) {};
@@ -388,20 +391,50 @@ const ascendingGroups = function (numbers) {};
 // flattenToObject([['a', 1], ['b', 2], ['c', 3]]) => { a: 1, b: 2, c: 3 }
 const flattenToObject = function (pairs) {};
 
-// longestString(["apple", "banana", "cherry", "dates"]) => "banana"
-const longestString = function (strings) {};
+// start of longestString
+const longestString = function (strings) {
+  return longestWord(strings);
+};
+
+console.log(longestString(["apple", "banana", "kiwi"]));
+
+/*                          end of longestString                      */
 
 // mergeIntervals([[1,3], [2,4], [5,7]]) => [[1, 4], [5, 7]]
 const mergeIntervals = function (intervals) {};
 
-// sumAndCount([1, 2, 3, 4]) => { sum: 10, count: 4 }
-const sumAndCount = function (numbers) {};
+// start of sumAndCount
+const sumAndCount = function (numbers) {
+  const totals = numbers.reduce(add, 0);
+  const count = numbers.reduce(counter, 0);
 
-// deepFlatten([[1,2], [3,4, [5,6]], 7]) => [1,2,3,4,5,6,7]
-const deepFlatten = function (arr) {};
+  return { sum: totals, count: count };
+};
 
-// findMax([1, 2, 3, 4, 5]) => 5
-const findMax = function (numbers) {};
+console.log(sumAndCount([1, 2, 3, 4]));
+
+/*                       end of sumAndCount                           */
+
+// start of deepFlatten
+const deepFlatten = function (arr) {
+  return flattenArray(arr);
+};
+
+console.log(
+  deepFlatten([[1, 2], [3, 4, [5, 6]], 7]),
+  deepFlatten([[10, 20], [30, 40, [50, 60]], 70])
+);
+
+/*                       end of deepFlatten                           */
+
+// start of findMax
+const findMax = function (numbers) {
+  return numbers.reduce(getMaximum, 0);
+};
+
+console.log(findMax([1, 9, 3, 4, 5]));
+
+/*                          end of findMax                              */
 
 // cumulativeSum([1,2,3,4]) => [1, 3, 6, 10]
 const cumulativeSum = function (numbers) {};
@@ -427,14 +460,62 @@ const groupByFirstLetter = function (words) {};
 // findFirstNonRepeated([1,2,3,4,2,1,5]) => 3
 const findFirstNonRepeated = function (numbers) {};
 
-// countVowels(["apple", "banana", "grape"]) => { a: 6, e: 3, i: 0, o: 0, u: 0 }
-const countVowels = function (words) {};
+// countVowels(["apple", "banana", "grape"]) => { a: 5, e: 2, i: 0, o: 0, u: 0 }
+const vowelCountOfWord = (object, [...word]) => {
+  for (let i = 0; i < word.length; i++) {
+    if (word[i] in object) {
+      object[word[i]] = object[word[i]] + 1;
+    }
+  }
+  return object;
+};
 
-// mergeConsecutiveDuplicates([1,1,1,2,3,3,4]) => [1,2,3,4]
-const mergeConsecutiveDuplicates = function (array) {};
+const countVowels = function (words) {
+  return words.reduce(vowelCountOfWord, { a: 0, e: 0, i: 0, o: 0, u: 0 });
+};
+
+console.log(countVowels(["apple", "banana", "grape"]));
+
+// start of mergeConsecutiveDuplicates
+const mergeConsecutiveDuplicates = function (array) {
+  let consecutive = 0;
+
+  return array.reduce((init, number) => {
+    if (consecutive !== number) {
+      init.push(number);
+      consecutive = number;
+    }
+
+    return init;
+  }, []);
+};
+
+console.log(
+  mergeConsecutiveDuplicates([1, 1, 1, 2, 3, 3, 4]),
+  mergeConsecutiveDuplicates([1, 1, 1, 2, 3, 3, 4, 2])
+);
+
+/*                        end of mergeConsecutiveDuplicates              */
 
 // longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]) => [0, 1, 2, 3, 4, 5]
-const longestConsecutiveSubsequence = function (numbers) {};
+const sortNumbers = (numbers) => {
+  return numbers.sort((a, b) => {
+    if (a < b) {
+      return -1;
+    }
+    if (a === b) {
+      return 0;
+    }
+
+    return 1;
+  });
+};
+
+const longestConsecutiveSubsequence = function (numbers) {
+  return uniqueNumbers(sortNumbers(numbers));
+};
+
+console.log(longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]));
 
 // start of topKFrequent
 const sortedArray = (array) => {

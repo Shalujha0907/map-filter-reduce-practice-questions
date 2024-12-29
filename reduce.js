@@ -25,12 +25,10 @@ console.log(productOf([1, , 2, 3, 4]), productOf([0, 1, 2, 3]));
 /*                      end of sumOf                                  */
 
 // start of averageOf
-const average = function (total, numOfElement) {
-  return total / numOfElement;
-};
-
 const averageOf = function (numbers) {
-  return average(numbers.reduce(add, 0), numbers.length);
+  return (function (numbers) {
+    return numbers.reduce(add, 0) / numbers.length;
+  })(numbers);
 };
 
 console.log(
@@ -436,15 +434,20 @@ const longestConsecutiveSubsequence = function (numbers) {};
 const topKFrequent = function (numbers, k) {};
 
 // nestedAverage([[[1, 2]], [3, 4], [5, [6, 7]]]) => 4
-const nestedAverage = function (nestedNumbers) {};
+const nestedAverage = function (nestedNumbers) {
+  const numbers = flattenArray(nestedNumbers);
+  return (function (numbers) {
+    return numbers.reduce(add, 0) / numbers.length;
+  })(numbers);
+};
+
+console.log(nestedAverage([[[1, 2]], [3, 4], [5, [6, 7]]]));
 
 // cartesianProduct([1, 2], ['a', 'b']) => [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
 const cartesianProduct = function (arr1, arr2) {};
 
 // start of groupByDate
 const accumulateByDate = (init, { date, value }) => {
-  if (!date || value == null) return init;
-
   if (!(date in init)) {
     init[date] = [value];
   } else {
@@ -468,11 +471,6 @@ console.log(
     { date: "2024-01-01", value: 10 },
     { date: "2024-01-01", value: 20 },
     { date: "2024-01-01", value: 30 },
-  ]),
-  groupByDate([
-    { date: "2024-01-01", value: 10 },
-    { date: "", value: null },
-    { date: "2024-01-01", value: undefined },
   ])
 );
 

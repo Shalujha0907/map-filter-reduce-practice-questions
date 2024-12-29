@@ -357,15 +357,11 @@ console.log(uniqueNumbers([1, 2, 2, 4, 5, 5, 1]));
 // groupByLength(["apple", "banana", "cherry", "date"]) => { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
 const groupByLength = function (strings) {};
 
-console.log(groupByLength(["apple", "banana", "cherry", "date"]));
-
 // countOccurrences(["apple", "banana", "cherry", "banana"]) => { apple: 1, banana: 2, cherry: 1 }
 const countOccurrences = function (strings) {};
 
 // mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
 const mergeObjects = function (objects) {};
-
-console.log(mergeObjects([{ a: 5 }]));
 
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
 const zip = function (keys, values) {};
@@ -445,11 +441,55 @@ const nestedAverage = function (nestedNumbers) {};
 // cartesianProduct([1, 2], ['a', 'b']) => [[1, 'a'], [1, 'b'], [2, 'a'], [2, 'b']]
 const cartesianProduct = function (arr1, arr2) {};
 
-// groupByDate([{ date: '2024-01-01', value: 10 }, { date: '2024-01-01', value: 20 }, { date: '2024-01-02', value: 30 }]) => { '2024-01-01': [10, 20], '2024-01-02': [30] }
-const groupByDate = function (records) {};
+// start of groupByDate
+const accumulateByDate = (init, { date, value }) => {
+  if (!date || value == null) return init;
 
-// findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
-const findMinMax = function (numbers) {};
+  if (!(date in init)) {
+    init[date] = [value];
+  } else {
+    init[date].push(value);
+  }
+
+  return init;
+};
+
+const groupByDate = function (records) {
+  return records.reduce(accumulateByDate, {});
+};
+
+console.log(
+  groupByDate([
+    { date: "2024-01-01", value: 10 },
+    { date: "2024-01-01", value: 20 },
+    { date: "2024-01-02", value: 30 },
+  ]),
+  groupByDate([
+    { date: "2024-01-01", value: 10 },
+    { date: "2024-01-01", value: 20 },
+    { date: "2024-01-01", value: 30 },
+  ]),
+  groupByDate([
+    { date: "2024-01-01", value: 10 },
+    { date: "", value: null },
+    { date: "2024-01-01", value: undefined },
+  ])
+);
+
+/*                          end of groupByDate                         */
+
+// start of findMinMax
+const findMinMax = function (numbers) {
+  const object = {};
+
+  object["min"] = numbers.reduce(getMinimum, 1);
+  object["max"] = numbers.reduce(getMaximum, 0);
+  return object;
+};
+
+console.log(findMinMax([1, 2, 3, 4, 5]), findMinMax([4, 0, 7, 3, 0]));
+
+/*                         end of findMinMax                            */
 
 // start of sumByCategory
 const sumByCategory = function (items) {

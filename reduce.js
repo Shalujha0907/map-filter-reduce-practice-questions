@@ -348,7 +348,13 @@ const uniqueNumbers = function (numbers) {
   return numbers.reduce(removeDuplicates, []);
 };
 
-console.log(uniqueNumbers([1, 2, 2, 4, 5, 5, 1]));
+console.log(
+  // uniqueNumbers([1, 2, 2, 4, 5, 5, 1]),
+  uniqueNumbers([
+    [1, 2],
+    [1, 2],
+  ])
+);
 
 /*                        end of uniqueNumbers                          */
 
@@ -430,8 +436,41 @@ const mergeConsecutiveDuplicates = function (array) {};
 // longestConsecutiveSubsequence([1, 2, 0, 1, 3, 4, 5]) => [0, 1, 2, 3, 4, 5]
 const longestConsecutiveSubsequence = function (numbers) {};
 
-// topKFrequent([1,1,1,2,2,3], 2) => [1, 2]
-const topKFrequent = function (numbers, k) {};
+// start of topKFrequent
+const sortedArray = (array) => {
+  return array.sort((list1, list2) => {
+    if (list1[1] > list2[1]) return -1;
+    return 1;
+  });
+};
+
+const topKFrequent = (numbers, k) => {
+  const comparators = uniqueNumbers(numbers);
+  const topKFrequentEle = [];
+
+  const eleWithOccurrances = comparators.map((comparator) => [
+    comparator,
+    numbers.reduce((count, number) => {
+      return number === comparator ? count + 1 : count;
+    }, 0),
+  ]);
+
+  const sortedArr = sortedArray(eleWithOccurrances);
+
+  for (let i = 0; i < k; i++) {
+    topKFrequentEle.push(sortedArr[i][0]);
+  }
+
+  return topKFrequentEle;
+};
+
+console.log(
+  topKFrequent([1, 1, 1, 2, 2, 3], 2),
+  topKFrequent([1, 2, 2, 3, 3, 3, 3, 3], 3),
+  topKFrequent([1, 1, 1, 2, 2, 2, 2, 3], 1)
+);
+
+/*                          end of topKFrequent                         */
 
 // nestedAverage([[[1, 2]], [3, 4], [5, [6, 7]]]) => 4
 const nestedAverage = function (nestedNumbers) {

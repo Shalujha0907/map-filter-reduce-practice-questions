@@ -357,11 +357,15 @@ console.log(uniqueNumbers([1, 2, 2, 4, 5, 5, 1]));
 // groupByLength(["apple", "banana", "cherry", "date"]) => { 5: ["apple", "cherry"], 6: ["banana"], 4: ["date"] }
 const groupByLength = function (strings) {};
 
+console.log(groupByLength(["apple", "banana", "cherry", "date"]));
+
 // countOccurrences(["apple", "banana", "cherry", "banana"]) => { apple: 1, banana: 2, cherry: 1 }
 const countOccurrences = function (strings) {};
 
 // mergeObjects([{ a: 1, b: 2 }, { b: 3, c: 4 }, { a: 5 }]) => { a: 6, b: 5, c: 4 }
 const mergeObjects = function (objects) {};
+
+console.log(mergeObjects([{ a: 5 }]));
 
 // zip(["a", "b", "c"], [1, 2, 3]) => { "a": 1, "b": 2, "c": 3 }
 const zip = function (keys, values) {};
@@ -447,5 +451,29 @@ const groupByDate = function (records) {};
 // findMinMax([1, 2, 3, 4, 5]) => { min: 1, max: 5 }
 const findMinMax = function (numbers) {};
 
-// sumByCategory([{ category: 'A', value: 10 }, { category: 'B', value: 20 }, { category: 'A', value: 30 }]) => { A: 40, B: 20 }
-const sumByCategory = function (items) {};
+// start of sumByCategory
+const sumByCategory = function (items) {
+  return items.reduce((object, item) => {
+    object[item.category] =
+      item.category in object ? object[item.category] + item.value : item.value;
+
+    return object;
+  }, {});
+};
+
+console.log(
+  sumByCategory([
+    { category: "A", value: 10 },
+    { category: "B", value: 20 },
+    { category: "A", value: 30 },
+  ]),
+  sumByCategory([
+    { category: "A", value: 5 },
+    { category: "C", value: 6 },
+    { category: "B", value: 20 },
+    { category: "B", value: 30 },
+    { category: "A", value: 4 },
+  ])
+);
+
+/*                              end of sumByCategory                      */
